@@ -1,0 +1,11 @@
+.env
+.env.production
+*.gem
+*.rbc
+*.csv
+/.config
+/coverage/
+/spec/reports/
+/tmp/
+.DS_Store
+vendor/
