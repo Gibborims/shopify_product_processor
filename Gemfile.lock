@@ -106,7 +106,7 @@ GEM
       faraday-multipart (>= 1)
     ruby-progressbar (1.13.0)
     securerandom (0.3.1)
-    shopify_api (12.5.0)
+    shopify_api (14.6.0)
       activesupport
       concurrent-ruby
       hash_diff
@@ -116,7 +116,7 @@ GEM
       openssl
       securerandom
       sorbet-runtime
-      zeitwerk (~> 2.5, < 2.6.5)
+      zeitwerk (~> 2.5)
     sorbet-runtime (0.5.11633)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -128,7 +128,7 @@ GEM
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
-    zeitwerk (2.6.4)
+    zeitwerk (2.6.18)
 
 PLATFORMS
   arm64-darwin-23
@@ -140,7 +140,7 @@ DEPENDENCIES
   rspec
   rubocop
   ruby-openai (~> 4.0)
-  shopify_api
+  shopify_api (~> 14.6.0)
   vcr
   webmock
   zeitwerk
