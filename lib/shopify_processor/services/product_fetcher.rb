@@ -52,7 +52,7 @@ module ShopifyProcessor
         {
           id: product.id,
           title: product.title,
-          description: "Ruby Software"
+          description: product.body_html
         }
       end
     end
