@@ -52,8 +52,16 @@ module ShopifyProcessor
         {
           id: product.id,
           title: product.title,
-          description: product.body_html
+          description: extract_text(product.body_html)
         }
+      end
+
+      def extract_text(html_body)
+        # Parse the HTML description
+        doc = Nokogiri::HTML(html_body)
+
+        # Extract the plain text description
+        doc.text
       end
     end
   end
