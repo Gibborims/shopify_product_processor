@@ -23,7 +23,7 @@ module ShopifyProcessor
         products.each do |product|
           enhanced_description = Services::DescriptionEnhancer.process(product[:description])
 
-          csv << csv_records(product[:description], enhanced_description)
+          csv << csv_records(product, enhanced_description)
 
           print '.' # Progress indicator
         end

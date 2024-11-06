@@ -14,9 +14,12 @@ module ShopifyProcessor
 
       def process
         response = fetch_openai_response(system_prompt)
-        return extract_content(response) if response
-      
-        puts("OpenAI API Error: Unable to process the request.")
+        puts "Response:: #{response.inspect}"
+        return extract_content(response) if response.is_a?(Hash) && response['choices']
+
+        handle_response_error(response) if response.is_a?(Hash) && response['error']
+
+        puts('OpenAI API Error: Unable to process the request.')
         @description
       rescue StandardError => e
         puts("Unexpected Error: #{e.message}")
@@ -28,9 +31,6 @@ module ShopifyProcessor
       # Fetch response from OpenAI API with error handling
       def fetch_openai_response(system_prompt)
         OPENAI_CLIENT.chat(parameters: openai_chat_params(system_prompt))
-      rescue OpenAI::APIError => e
-        handle_openai_error(e)
-        nil
       rescue StandardError => e
         puts("General API Error: #{e.message}")
         nil
@@ -58,31 +58,32 @@ module ShopifyProcessor
       # System prompt definition
       def system_prompt
         'As a professional e-commerce copywriter. Enhance product descriptions to be ' \
-        'SEO-friendly while maintaining key product details. ' \
-        'Focus on features that drive conversions.'
+          'SEO-friendly while maintaining key product details. ' \
+          'Focus on features that drive conversions.'
       end
 
-      # Handle OpenAI API errors
-      def handle_openai_error(error)
-        puts "Error Type: #{error.type}"
-        puts "Error Code: #{error.code}"
-        puts "Error Message: #{error.message}"
+      # Handle response errors that are returned as a Hash
+      def handle_response_error(response)
+        error = response['error']
+        puts "Error Type: #{error['type']}"
+        puts "Error Code: #{error['code']}"
+        puts "Error Message: #{error['message']}"
 
-        case error.type
+        case error['type']
         when 'invalid_request_error'
-          puts "Invalid request: #{error.message}"
+          puts "Invalid request: #{error['message']}"
         when 'invalid_authentication_error'
-          puts "Authentication failed. Check your API key."
+          puts 'Authentication failed. Check your API key.'
         when 'rate_limit_error'
-          puts "Rate limit exceeded. Please slow down your requests."
+          puts 'Rate limit exceeded. Please slow down your requests.'
         when 'insufficient_quota'
-          puts "Quota exceeded. Please check your plan."
+          puts 'Quota exceeded. Please check your plan.'
         when 'server_error'
-          puts "Server error. Please try again later."
+          puts 'Server error. Please try again later.'
         else
-          puts "An unknown error occurred: #{error}."
+          puts 'An unknown error occurred.'
         end
-      end      
+      end
     end
   end
 end

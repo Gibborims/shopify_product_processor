@@ -25,8 +25,8 @@ ShopifyAPI::Context.setup(
   scope: [], # Add scopes if needed
   is_private: true, # Set to true for private apps
   is_embedded: false, # Set to false for non-embedded apps
-  private_shop: "https://#{ENV.fetch('SHOPIFY_SHOP_NAME')}.myshopify.com",  # Required for private apps
-  user_agent_prefix: "CustomApp/1.0"         # Optional but recommended
+  private_shop: "https://#{ENV.fetch('SHOPIFY_SHOP_NAME')}.myshopify.com",
+  user_agent_prefix: 'CustomApp/1.0' # Optional but recommended
 )
 
 # Configure OpenAI client
