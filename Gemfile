@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 gem 'amazing_print' # Better debug output
 gem 'dotenv', '~> 2.8' # Environment variable management
+gem 'nokogiri', '~> 1.15.0' # A stable version that works well with this setup
 gem 'ruby-openai', '~> 4.0' # OpenAI API client
 gem 'shopify_api', '~> 14.6.0' # Shopify API client
 gem 'zeitwerk' # Modern code loading
