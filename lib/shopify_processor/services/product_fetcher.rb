@@ -16,7 +16,7 @@ module ShopifyProcessor
         session = create_session
         activate_session(session)
 
-        ShopifyAPI::Product.all.first(1).each do |product|
+        ShopifyAPI::Product.all.each do |product|
           products << product_params(product)
 
           sleep 0.5 # Rate limiting
