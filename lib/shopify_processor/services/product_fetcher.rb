@@ -16,7 +16,7 @@ module ShopifyProcessor
         session = create_session
         activate_session(session)
 
-        ShopifyAPI::Product.all.first(1).each do |product|
+        ShopifyAPI::Product.all.each do |product|
           products << product_params(product)
 
           sleep 0.5 # Rate limiting
@@ -52,8 +52,16 @@ module ShopifyProcessor
         {
           id: product.id,
           title: product.title,
-          description: product.body_html
+          description: extract_text(product.body_html)
         }
+      end
+
+      def extract_text(html_body)
+        # Parse the HTML description
+        doc = Nokogiri::HTML(html_body)
+
+        # Extract the plain text description
+        doc.text
       end
     end
   end

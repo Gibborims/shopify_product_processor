@@ -20,12 +20,14 @@ module ShopifyProcessor
       CSV.open("product_descriptions_#{Time.now.strftime('%Y%m%d_%H%M%S')}.csv", 'wb') do |csv|
         csv << ['Original Description', 'Enhanced Description']
 
-        products.each do |product|
+        products.each_with_index do |product, index|
+          print "======================== #{index + 1}. ========================\n"
+
           enhanced_description = Services::DescriptionEnhancer.process(product[:description])
 
           csv << csv_records(product, enhanced_description)
 
-          print '.' # Progress indicator
+          print ".\n" # Progress indicator
         end
       end
 

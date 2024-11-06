@@ -59,6 +59,8 @@ GEM
     multipart-post (2.4.1)
     net-http (0.4.1)
       uri
+    nokogiri (1.15.6-arm64-darwin)
+      racc (~> 1.4)
     oj (3.16.7)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
@@ -136,6 +138,7 @@ PLATFORMS
 DEPENDENCIES
   amazing_print
   dotenv (~> 2.8)
+  nokogiri (~> 1.15.0)
   pry
   rspec
   rubocop

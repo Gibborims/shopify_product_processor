@@ -4,6 +4,7 @@
 
 require 'dotenv'
 require 'shopify_api'
+require 'nokogiri'
 require 'openai'
 require 'amazing_print'
 require 'zeitwerk'
