@@ -13,6 +13,14 @@ bundle install
 ./bin/run_process
 ```
 
+4. API Keys are inputted into the `test_api_keys.csv` file. The column headers are:
+- shopify_shop_name
+- shopify_access_token
+- openai_api_key
+- shopify_api_version
+- shopify_api_secret_key
+
+
 ## 2. Best Practices Implemented
 
 - Modular code structure using services
