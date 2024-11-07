@@ -36,8 +36,8 @@ RSpec.describe ShopifyProcessor::Services::ProductFetcher do
 
     it 'creates a Shopify API session' do
       expect(ShopifyAPI::Auth::Session).to receive(:new).with(
-        shop: "#{ENV.fetch('SHOPIFY_SHOP_NAME')}.myshopify.com",
-        access_token: ENV.fetch('SHOPIFY_ACCESS_TOKEN')
+        shop: "#{SHOPIFY_SHOP_NAME}.myshopify.com",
+        access_token: SHOPIFY_ACCESS_TOKEN
       ).and_return(instance_double(ShopifyAPI::Auth::Session))
       subject.fetch_all
     end

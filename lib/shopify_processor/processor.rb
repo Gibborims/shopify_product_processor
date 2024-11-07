@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'csv'
-
 module ShopifyProcessor
   # Generates shopify product description as CSV
   class Processor

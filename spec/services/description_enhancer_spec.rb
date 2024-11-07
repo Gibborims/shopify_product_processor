@@ -40,7 +40,7 @@ RSpec.describe ShopifyProcessor::Services::DescriptionEnhancer do
 
   describe '#process' do
     before do
-      allow(ENV).to receive(:fetch).with('OPENAI_API_KEY').and_return('fake_api_key')
+      # allow(ENV).to receive(:fetch).with('OPENAI_API_KEY').and_return('fake_api_key')
       allow(subject).to receive(:fetch_openai_response).with(subject.send(:system_prompt))
                                                        .and_return(mock_openai_response)
     end
