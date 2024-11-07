@@ -9,6 +9,8 @@ require 'nokogiri'
 require 'openai'
 require 'amazing_print'
 require 'zeitwerk'
+# Require the ApiKeys module
+require_relative '../lib/api_keys'
 
 # Load environment variables
 Dotenv.load
@@ -18,25 +20,15 @@ loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/../lib")
 loader.setup
 
-# Determine the appropriate API keys CSV file based on the Rails environment
-api_keys_csv = ENV.fetch('RAILS_ENV') == 'development' ? 'api_keys.csv' : 'test_api_keys.csv'
+# Load the keys
+ApiKeys.load_keys
 
 # Initialize the constants
-SHOPIFY_SHOP_NAME = nil
-SHOPIFY_ACCESS_TOKEN = nil
-OPENAI_API_KEY = nil
-SHOPIFY_API_VERSION = nil
-SHOPIFY_API_SECRET_KEY = nil
-
-# Load the API keys from the CSV file
-CSV.foreach(api_keys_csv, headers: true) do |row|
-  # Make the API keys available throughout your application
-  SHOPIFY_SHOP_NAME = row['shopify_shop_name']
-  SHOPIFY_ACCESS_TOKEN = row['shopify_access_token']
-  OPENAI_API_KEY = row['openai_api_key']
-  SHOPIFY_API_VERSION = row['shopify_api_version']
-  SHOPIFY_API_SECRET_KEY = row['shopify_api_secret_key']
-end
+SHOPIFY_SHOP_NAME = ApiKeys.shopify_shop_name
+SHOPIFY_ACCESS_TOKEN = ApiKeys.shopify_access_token
+OPENAI_API_KEY = ApiKeys.openai_api_key
+SHOPIFY_API_VERSION = ApiKeys.shopify_api_version
+SHOPIFY_API_SECRET_KEY = ApiKeys.shopify_api_secret_key
 
 # Configure Shopify API
 ShopifyAPI::Context.setup(
