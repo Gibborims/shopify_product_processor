@@ -9,12 +9,13 @@ require 'vcr'
 require 'webmock/rspec'
 require_relative '../config/initializers'
 require_relative '../lib/shopify_processor'
+require_relative '../lib/api_keys'
 
 VCR.configure do |config|
   config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
   config.hook_into :webmock
-  config.filter_sensitive_data('<SHOPIFY_ACCESS_TOKEN>') { ENV.fetch('SHOPIFY_ACCESS_TOKEN', nil) }
-  config.filter_sensitive_data('<OPENAI_API_KEY>') { ENV.fetch('OPENAI_API_KEY', nil) }
+  config.filter_sensitive_data('<SHOPIFY_ACCESS_TOKEN>') { SHOPIFY_ACCESS_TOKEN || nil }
+  config.filter_sensitive_data('<OPENAI_API_KEY>') { OPENAI_API_KEY || nil }
 end
 
 RSpec.configure do |config|

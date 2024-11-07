@@ -35,8 +35,8 @@ module ShopifyProcessor
 
       def create_session
         ShopifyAPI::Auth::Session.new(
-          shop: "#{ENV.fetch('SHOPIFY_SHOP_NAME')}.myshopify.com",
-          access_token: ENV.fetch('SHOPIFY_ACCESS_TOKEN')
+          shop: "#{SHOPIFY_SHOP_NAME}.myshopify.com",
+          access_token: SHOPIFY_ACCESS_TOKEN
         )
       end
 
