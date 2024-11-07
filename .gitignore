@@ -2,7 +2,12 @@
 .env.production
 *.gem
 *.rbc
+# Ignore all .csv files
 *.csv
+
+# Exception for test_api_keys.csv
+!test_api_keys.csv
+
 /.config
 /coverage/
 /spec/reports/
