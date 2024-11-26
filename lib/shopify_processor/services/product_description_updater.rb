@@ -16,8 +16,9 @@ module ShopifyProcessor
 
         raise "Failed to update product #{@product_id}: Update returned false" unless success
       rescue StandardError => e
-        raise e.message.include?("Failed to update product #{@product_id}") ? e :
-        "Failed to update product #{@product_id}: #{e.message}"
+        raise e if e.message.include?("Failed to update product #{@product_id}")
+
+        raise "Failed to update product #{@product_id}: #{e.message}"
       end
     end
   end

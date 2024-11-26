@@ -4,18 +4,21 @@
 require 'spec_helper'
 
 describe ShopifyProcessor::Services::ProductDescriptionUpdater do
-  describe "#call" do
+  describe '#call' do
     let(:product_id) { 123 }
-    let(:enhanced_html_description) { "<p>Enhanced Description</p>" }
-    let(:product) { double("ShopifyAPI::Product", save: true) }
-    let(:updater) { described_class.new(product_id: product_id, enhanced_html_description: enhanced_html_description) }
+    let(:enhanced_html_description) { '<p>Enhanced Description</p>' }
+    let(:product) { double('ShopifyAPI::Product', save: true) }
+    let(:updater) do
+      described_class.new(product_id: product_id,
+                          enhanced_html_description: enhanced_html_description)
+    end
 
     before do
       allow(ShopifyAPI::Product).to receive(:find).with(id: product_id).and_return(product)
     end
 
-    context "when product update is successful" do
-      it "updates the product description" do
+    context 'when product update is successful' do
+      it 'updates the product description' do
         allow(product).to receive(:body_html=).with(enhanced_html_description)
         allow(product).to receive(:save).and_return(true)
 
@@ -26,24 +29,27 @@ describe ShopifyProcessor::Services::ProductDescriptionUpdater do
       end
     end
 
-    context "when product save fails" do
-      it "raises an error indicating the update failure" do
+    context 'when product save fails' do
+      it 'raises an error indicating the update failure' do
         allow(product).to receive(:body_html=).with(enhanced_html_description)
         allow(product).to receive(:save).and_return(false)
 
-        expect {
+        expect do
           updater.call
-        }.to raise_error(RuntimeError, "Failed to update product #{product_id}: Update returned false")
+        end.to raise_error(RuntimeError,
+                           "Failed to update product #{product_id}: Update returned false")
       end
     end
 
-    context "when an exception occurs during the process" do
-      it "raises an error with the exception message" do
-        allow(ShopifyAPI::Product).to receive(:find).and_raise(StandardError.new("API is unavailable"))
+    context 'when an exception occurs during the process' do
+      it 'raises an error with the exception message' do
+        allow(ShopifyAPI::Product).to receive(:find)
+          .and_raise(StandardError.new('API is unavailable'))
 
-        expect {
+        expect do
           updater.call
-        }.to raise_error(RuntimeError, "Failed to update product #{product_id}: API is unavailable")
+        end.to raise_error(RuntimeError,
+                           "Failed to update product #{product_id}: API is unavailable")
       end
     end
   end
