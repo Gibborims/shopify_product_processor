@@ -26,7 +26,7 @@ RSpec.describe ShopifyProcessor::Services::ProductByIdFetcher do
         allow(ShopifyAPI::Product).to receive(:find).and_raise(StandardError.new('API Error'))
 
         fetcher = described_class.new(product_id: product_id)
-        
+
         expect { fetcher.call }
           .to raise_error(RuntimeError, /Failed to fetch product #{product_id}/)
       end
