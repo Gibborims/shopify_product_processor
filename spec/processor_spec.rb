@@ -8,8 +8,10 @@ require 'spec_helper'
 RSpec.describe ShopifyProcessor::Processor do
   let(:mock_products) do
     [
-      { id: 1, title: 'Product 1', description: 'This is the original description for Product 1.' },
-      { id: 2, title: 'Product 2', description: 'This is the original description for Product 2.' }
+      { id: '123456789', title: 'Product 1',
+        description: 'This is the original description for Product 1.' },
+      { id: '987654321', title: 'Product 2',
+        description: 'This is the original description for Product 2.' }
     ]
   end
 
@@ -65,11 +67,14 @@ RSpec.describe ShopifyProcessor::Processor do
 
     it 'creates a CSV file with the original and enhanced descriptions' do
       expect(CSV).to receive(:open).with(csv_file, 'wb')
-      expect(csv_double).to receive(:<<).with(['Original Description', 'Enhanced Description'])
-      expect(csv_double).to receive(:<<).with([mock_products[0][:description],
-                                               mock_enhanced_descriptions[0]])
-      expect(csv_double).to receive(:<<).with([mock_products[1][:description],
-                                               mock_enhanced_descriptions[1]])
+      expect(csv_double).to receive(:<<).with(['Product ID', 'Original Description',
+                                               'Enhanced Description', 'Changed'])
+      expect(csv_double).to receive(:<<).with([mock_products[0][:id],
+                                               mock_products[0][:description],
+                                               mock_enhanced_descriptions[0], ''])
+      expect(csv_double).to receive(:<<).with([mock_products[1][:id],
+                                               mock_products[1][:description],
+                                               mock_enhanced_descriptions[1], ''])
 
       subject.send(:process_products, mock_products)
     end
@@ -77,11 +82,11 @@ RSpec.describe ShopifyProcessor::Processor do
 
   describe '#csv_records' do
     it 'returns an array of CSV records' do
-      product = { description: 'Original description' }
+      product = { id: '123456789', description: 'Original description' }
       enhanced_description = 'Enhanced description'
       expect(subject.send(:csv_records, product,
-                          enhanced_description)).to eq(['Original description',
-                                                        'Enhanced description'])
+                          enhanced_description)).to eq(['123456789', 'Original description',
+                                                        'Enhanced description', ''])
     end
   end
 end

@@ -16,7 +16,7 @@ module ShopifyProcessor
 
     def process_products(products)
       CSV.open("product_descriptions_#{Time.now.strftime('%Y%m%d_%H%M%S')}.csv", 'wb') do |csv|
-        csv << ['Original Description', 'Enhanced Description']
+        csv << ['Product ID', 'Original Description', 'Enhanced Description', 'Changed']
 
         products.each_with_index do |product, index|
           print "======================== #{index + 1}. ========================\n"
@@ -34,8 +34,10 @@ module ShopifyProcessor
 
     def csv_records(product, enhanced_description)
       [
+        product[:id],
         product[:description],
-        enhanced_description
+        enhanced_description,
+        ''
       ]
     end
   end
