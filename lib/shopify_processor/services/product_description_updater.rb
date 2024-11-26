@@ -12,9 +12,12 @@ module ShopifyProcessor
       def call
         product = ShopifyAPI::Product.find(id: @product_id)
         product.body_html = @enhanced_html_description
-        product.save
+        success = product.save
+
+        raise "Failed to update product #{@product_id}: Update returned false" unless success
       rescue StandardError => e
-        raise "Failed to update product #{@product_id}: #{e.message}"
+        raise e.message.include?("Failed to update product #{@product_id}") ? e :
+        "Failed to update product #{@product_id}: #{e.message}"
       end
     end
   end
