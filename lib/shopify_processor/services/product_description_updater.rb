@@ -10,7 +10,12 @@ module ShopifyProcessor
       end
 
       def call
+        puts "======== PRODUCT ID: #{@product_id.inspect} ========\n"
+        puts '===================== ENHANCED HTML DESCRIPTION ========================='
+        puts "====== #{@enhanced_html_description.inspect} ======\n\n"
         product = ShopifyAPI::Product.find(id: @product_id)
+        puts '===================== ORIGINAL HTML DESCRIPTION ========================='
+        puts "====== #{product.body_html.inspect} ======\n"
         product.body_html = @enhanced_html_description
         success = product.save
 

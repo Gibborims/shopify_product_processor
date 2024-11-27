@@ -7,7 +7,6 @@
 
 # Exception for some *.csv
 !test_api_keys.csv
-!enhanced_product_desc.csv
 
 /.config
 /coverage/

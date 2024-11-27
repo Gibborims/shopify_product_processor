@@ -15,8 +15,8 @@ RSpec.describe ShopifyProcessor::ProductUpdateProcessor do
   let(:csv_content) do
     [
       ['Product ID', 'Original Description', 'Enhanced Description', 'Changed'],
-      [product_id, 'Original Desc', enhanced_description, true],
-      ['67890', 'Another Desc', 'Another Enhanced', false],
+      [product_id, 'Original Desc', enhanced_description, 'true'],
+      ['67890', 'Another Desc', 'Another Enhanced', 'false'],
       ['11111', 'Third Desc', 'Third Enhanced', nil]
     ]
   end
@@ -183,7 +183,7 @@ RSpec.describe ShopifyProcessor::ProductUpdateProcessor do
     end
 
     describe ShopifyProcessor::Services::ProductDescriptionUpdater do
-      let(:shopify_product) { double(ShopifyAPI::Product, save: true) }
+      let(:shopify_product) { double(ShopifyAPI::Product, save: true, body_html: nil) }
 
       before do
         allow(shopify_product).to receive(:body_html=)

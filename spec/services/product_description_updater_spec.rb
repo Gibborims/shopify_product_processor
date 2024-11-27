@@ -7,7 +7,8 @@ describe ShopifyProcessor::Services::ProductDescriptionUpdater do
   describe '#call' do
     let(:product_id) { 123 }
     let(:enhanced_html_description) { '<p>Enhanced Description</p>' }
-    let(:product) { double('ShopifyAPI::Product', save: true) }
+    let(:product) { double('ShopifyAPI::Product', save: save_result, body_html: nil) }
+    let(:save_result) { false }
     let(:updater) do
       described_class.new(product_id: product_id,
                           enhanced_html_description: enhanced_html_description)
@@ -15,9 +16,12 @@ describe ShopifyProcessor::Services::ProductDescriptionUpdater do
 
     before do
       allow(ShopifyAPI::Product).to receive(:find).with(id: product_id).and_return(product)
+      # Mock the setter for body_html
+      allow(product).to receive(:body_html=)
     end
 
     context 'when product update is successful' do
+      let(:save_result) { true }
       it 'updates the product description' do
         allow(product).to receive(:body_html=).with(enhanced_html_description)
         allow(product).to receive(:save).and_return(true)
@@ -30,6 +34,7 @@ describe ShopifyProcessor::Services::ProductDescriptionUpdater do
     end
 
     context 'when product save fails' do
+      let(:save_result) { false }
       it 'raises an error indicating the update failure' do
         allow(product).to receive(:body_html=).with(enhanced_html_description)
         allow(product).to receive(:save).and_return(false)
@@ -42,6 +47,7 @@ describe ShopifyProcessor::Services::ProductDescriptionUpdater do
     end
 
     context 'when an exception occurs during the process' do
+      let(:save_result) { false }
       it 'raises an error with the exception message' do
         allow(ShopifyAPI::Product).to receive(:find)
           .and_raise(StandardError.new('API is unavailable'))

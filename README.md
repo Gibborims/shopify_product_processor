@@ -22,11 +22,11 @@ bundle install
 
 5. Algorithm for `./bin/run_desc_updates` (run description updates) implementation (2nd Task):
 - Update the first task to include `Product ID` and `Changed` in the CSV in addition to original_description and enhanced_description.
-- Upload this CSV again and use product_id to fetch the product description from SHOPIFY for records with `Changed` as true. We discard or skip any record with `Changed` as nil or false.
+- Upload this CSV again and use product_id to fetch the product description from SHOPIFY for records with `Changed` as `true`. We discard or skip any record with `Changed` as `nil` or `false`.
 - Query the ChatGPT bot with the fetched product description to include HTML tags and CSS styling like the fetched product description. Call this enhanced HTML product description.
 - Update the original product description in SHOPIFY with the enhanced HTML description.
 
-4. API Keys are inputted into the `test_api_keys.csv` file. The column headers are:
+6. API Keys are inputted into the `test_api_keys.csv` file. The column headers are:
 - shopify_shop_name
 - shopify_access_token
 - openai_api_key
