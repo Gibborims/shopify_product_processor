@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# # frozen_string_literal: true
-
 # spec/services/shopify_processor/processor_spec.rb
 require 'spec_helper'
 

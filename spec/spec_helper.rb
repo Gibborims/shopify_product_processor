@@ -7,6 +7,7 @@ Dotenv.load('.env.test')
 require 'rspec'
 require 'vcr'
 require 'webmock/rspec'
+require 'tempfile'
 require_relative '../config/initializers'
 require_relative '../lib/shopify_processor'
 require_relative '../lib/api_keys'

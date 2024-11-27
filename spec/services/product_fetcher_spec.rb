@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-# # frozen_string_literal: true
-
-# # spec/services/product_fetcher_spec.rb
+# spec/services/product_fetcher_spec.rb
 require 'spec_helper'
 
 RSpec.describe ShopifyProcessor::Services::ProductFetcher do
