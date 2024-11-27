@@ -1,0 +1,15 @@
+# bin/run_desc_updates
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require_relative '../lib/shopify_processor/product_update_processor'
+
+begin
+  puts "Starting product description updates..."
+  ShopifyProcessor::ProductUpdateProcessor.run
+  puts "Product description updates completed successfully!"
+rescue StandardError => e
+  puts "Error occurred: #{e.message}"
+  puts e.backtrace
+  exit 1
+end
