@@ -8,12 +8,25 @@ bundle install
 
 2. Set up your environment variables in `.env`. An example is found in `.env.test`
 
-3. Run the script:
+3. Run the script to generate CSV of enhanced product description:
 ```bash
 ./bin/run_process
 ```
 
-4. API Keys are inputted into the `test_api_keys.csv` file. The column headers are:
+4. Run the script to upload CSV to update Shopify Product description with enhanced html description:
+```bash
+./bin/run_desc_updates
+```
+- CSV Default Name: `enhanced_product_desc.csv`
+- CSV Strict Columns: `Product ID` `Original Description` `Enhanced Description` `Changed`
+
+5. Algorithm for `./bin/run_desc_updates` (run description updates) implementation (2nd Task):
+- Update the first task to include `Product ID` and `Changed` in the CSV in addition to original_description and enhanced_description.
+- Upload this CSV again and use product_id to fetch the product description from SHOPIFY for records with `Changed` as `true`. We discard or skip any record with `Changed` as `nil` or `false`.
+- Query the ChatGPT bot with the fetched product description to include HTML tags and CSS styling like the fetched product description. Call this enhanced HTML product description.
+- Update the original product description in SHOPIFY with the enhanced HTML description.
+
+6. API Keys are inputted into the `test_api_keys.csv` file. The column headers are:
 - shopify_shop_name
 - shopify_access_token
 - openai_api_key
